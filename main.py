@@ -17,6 +17,13 @@ if __name__ == "__main__":
     login_user = tkinter.StringVar()
     login_pass = tkinter.StringVar()
 
+    # credential storage
+    username = StringVar()
+    password = StringVar()
+
+    # Images
+
+
 
     # window skeleton
     root.rowconfigure(0,weight=10)
@@ -44,14 +51,14 @@ if __name__ == "__main__":
 
     # login frame
     login_frame = Frame(root, width=600, height=700)
-    login_title = Label(login_frame, text="Login window",font="Helvetica").pack()
+    login_title = Label(login_frame, text="Login window", font="Helvetica").pack()
     login_u_label = Label(login_frame, text="Username:").pack()
     login_entry_u = Entry(login_frame, width=25, textvariable=login_user).pack()
     login_p_label = Label(login_frame, text="Password:").pack()
     login_entry_p = Entry(login_frame, width=25, textvariable=login_pass).pack()
 
     # buttons
-    login_button = Button(login_frame, text="Login", command=lambda: login(login_user.get(),login_pass.get(),login_frame,main_frame)).pack()
+    login_button = Button(login_frame, text="Login", command=lambda: login(login_user.get(),login_pass.get(),login_frame,main_frame_menu, username, password)).pack()
     login_back_button = Button(login_frame, text="Back", command=lambda: frame_change(login_frame,auth_frame)).pack()
 
 
@@ -64,13 +71,19 @@ if __name__ == "__main__":
     register_entry_p = Entry(register_frame, width=25, textvariable=register_pass).pack()
 
     # buttons
-    register_button = Button(register_frame, text="Register").pack()
+    register_button = Button(register_frame, text="Register", command=lambda: register(register_user.get(),register_pass.get(),register_frame,login_frame)).pack()
     register_back_button = Button(register_frame, text="Back", command=lambda: frame_change(register_frame,auth_frame)).pack()
 
 
-    # main frame (momentan testing)
-    main_frame = Frame(root, width=600, height=700)
-    main_label = Label(main_frame, text="A functionat").pack()
+    # main frame
+    main_frame_menu = Frame(root, width=600, height=700)
+    way_label = Label(main_frame_menu, text="What are you?", font="Helvetica").pack()
+    empty_label1 = Label(main_frame_menu).pack()
+    seller_button = Button(main_frame_menu, text="Seller", width=40, command=lambda: print_something(username)).pack()
+    empty_label2 = Label(main_frame_menu).pack()
+    buyer_button = Button(main_frame_menu, text="Buyer", width=40).pack()
+    empty_label3 = Label(main_frame_menu).pack()
+    settings_button = Button(main_frame_menu, text="Settings", width=40).pack()
 
 
     # version frame
