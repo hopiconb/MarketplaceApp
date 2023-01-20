@@ -42,19 +42,6 @@ def sell(name, desc, user, price, contact, window):
     else:
         messagebox.showwarning("Warning", "Name is too long\nplease use 10 or less characters")
 
-def show_items(name, desc, user, price, contact, list, canvas):
-    db = open("products.csv", "r+")
-    reader = csv.reader(db)
-    for row in reader:
-        frame = Frame(list, relief="solid")
-        name_label = Label(frame, text=row[0]).pack()
-        desc_label = Label(frame, text=row[1]).pack()
-        user_label = Label(frame, text=row[2]).pack()
-        price_label = Label(frame, text=row[3]).pack()
-        contact_label = Label(frame, text=row[4]).pack()
-        frame.pack()
-    list.update_idletask()
-    canvas.config(scrollregion=canvas.bbox("all"))
 
 
 

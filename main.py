@@ -82,7 +82,7 @@ if __name__ == "__main__":
     empty_label2 = Label(main_frame_menu).pack()
     buyer_button = Button(main_frame_menu, text="Buyer", width=40, command=lambda: buyer_page()).pack()
     empty_label3 = Label(main_frame_menu).pack()
-    settings_button = Button(main_frame_menu, text="Settings", width=40).pack()
+    settings_button = Button(main_frame_menu, text="Settings", width=40, state="disabled").pack()
 
     # Seller page
     seller = None
@@ -118,7 +118,7 @@ if __name__ == "__main__":
             seller_prod_contact_label = Label(seller_frame, text="Contact").pack()
             seller_prod_contact = Entry(seller_frame, width=50, textvariable=seller_entry_prod_contact).pack()
             empty_label4 = Label(seller_frame).pack()
-            sell_button = Button(seller_frame, text="Sell", width=40, command=lambda: sell(seller_entry_prod_name.get(), seller_entry_prod_desc.get(), username, seller_entry_prod_price.get(), seller_entry_prod_contact.get(), seller)).pack()
+            sell_button = Button(seller_frame, text="Sell", width=40, command=lambda: sell(seller_entry_prod_name.get(), seller_entry_prod_desc.get(), 'username', seller_entry_prod_price.get(), seller_entry_prod_contact.get(), seller)).pack()
 
             seller_frame.grid(row=1, column=0, columnspan=3)
         else:
@@ -127,12 +127,6 @@ if __name__ == "__main__":
 
     # Buyer page
     buyer = None
-    buyer_name = StringVar()
-    buyer_desc = StringVar()
-    buyer_user = StringVar()
-    buyer_price = StringVar()
-    buyer_contact = StringVar()
-
 
     def buyer_page():
         global buyer
@@ -144,16 +138,35 @@ if __name__ == "__main__":
             buyer.resizable(width=False, height=False)
 
             logo_frame_b = Frame(buyer, width=600, height=100)
-            logo_frame_b.grid(row=0, column=0, columnspan=3, sticky=N)
+            logo_frame_b.pack()
             logo_label_b = Label(logo_frame_b, image=logo_image).pack()
 
 
-            buyer_canvas = Canvas(buyer).pack(side="left", fill="both", expand=True)
-            scrollbar_b = Scrollbar(buyer, orient="vertical", command=buyer_canvas.yview).pack(side="right", fill="y")
+            buyer_canvas = Canvas(buyer, highlightcolor="black", highlightthickness=2, height=5, width=5)
+            scrollbar_b = Scrollbar(buyer, orient="vertical", command=buyer_canvas.yview)
             buyer_canvas.config(yscrollcommand=scrollbar_b.set)
             list_frame = Frame(buyer_canvas)
             buyer_canvas.create_window((0, 0), window=list_frame, anchor="nw")
-            show_items(buyer_name, buyer_desc, buyer_user, buyer_price, buyer_contact, list_frame, buyer_canvas)
+            scrollbar_b.pack(side="right", fill="y")
+            buyer_canvas.pack(side="left", fill="both", expand=True)
+            with open("products.csv", "r+") as db:
+                reader = csv.reader(db)
+                for row in reader:
+                    frame = Frame(buyer_canvas, width=40, highlightbackground="orange", highlightthickness=2)
+
+                    label1 = Label(frame, text=row[0])
+                    label1.grid(row=0, column=0)
+                    label2 = Label(frame, text=row[1])
+                    label2.grid(row=0, column=1)
+                    label3 = Label(frame, text=row[2])
+                    label3.grid(row=0, column=2)
+                    label4 = Label(frame, text=row[3])
+                    label4.grid(row=0, column=3)
+                    label5 = Label(frame, text=row[4])
+                    label5.grid(row=0, column=4)
+
+                    frame.pack(padx=10, pady=10)
+
         else:
             buyer.lift()
 
